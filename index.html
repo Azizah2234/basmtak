@@ -1,0 +1,33 @@
+<div class="value">${patient.name}</div>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <i class="fa-solid fa-droplet"></i>
+                    <div>
+                        <div class="label">فصيلة الدم</div>
+                        <div class="value" style="color: #ef4444;">${patient.blood}</div>
+                    </div>
+                </div>
+                <div class="info-group danger">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div>
+                        <div class="label">الحالة الصحية الحرجـة</div>
+                        <div class="value" style="color: #b91c1c;">${patient.condition}</div>
+                    </div>
+                </div>
+                <a href="tel:${patient.emergencyContact}" class="btn-call">
+                    <i class="fa-solid fa-phone-flip"></i>
+                    اتصال فوري بالطوارئ
+                </a>
+            `;
+        } else {
+            contentDiv.innerHTML = <div class="error-msg"><i class="fa-solid fa-circle-xmark" style="font-size: 40px; margin-bottom: 10px;"></i><br>عذراً، لم يتم العثور على الملف الطبي!</div>;
+        }
+    }
+
+    // تشغيل الدالة عند تحميل الصفحة
+    window.onload = loadMedicalProfile;
+</script>
+
+</body>
+</html>
