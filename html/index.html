@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بصمتك الصحية - الهوية الطبية الرقمية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=600;800&family=Tajawal:wght=400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f4f7f9;
+            color: #334155;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .header {
+            background: linear-gradient(135deg, #005088 0%, #00335a 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .header h1 { font-family: 'Cairo', sans-serif; font-size: 24px; margin-bottom: 5px; }
+        .header p { opacity: 0.9; font-size: 14px; letter-spacing: 0.5px; }
+        .profile-card {
+            background: #f8fafc;
+            margin: -20px 20px 20px 20px;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #edf2f7;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .profile-card i { font-size: 40px; color: #005088; margin-bottom: 10px; }
+        .profile-card h2 { font-size: 20px; color: #1e293b; margin-bottom: 5px; }
+        .blood-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .section-title {
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            color: #005088;
+            padding: 0 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+        .info-group {
+            padding: 0 20px;
+            margin-bottom: 25px;
+        }
+        .info-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .info-card.alert {
+            background: #fff5f5;
+            border-color: #fecaca;
+        }
+        .info-card.alert i { color: #dc2626; }
+        .info-card i { font-size: 20px; color: #64748b; width: 25px; text-align: center; }
+        .info-content { flex-grow: 1; }
+        .info-label { font-size: 12px; color: #64748b; margin-bottom: 2px; }
+        .info-value { font-size: 16px; font-weight: 500; color: #1e293b; }
+        .btn-call {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin: 15px 20px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            transition: background 0.2s;}
+        .btn-call:hover { background: #059669; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            color: #94a3b8;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>بصمتك الصحية</h1>
+        <p>نظام الهوية الطبية الرقمية في حالات الطوارئ</p>
+    </div>
+
+    <div class="profile-card">
+        <i class="fa-solid fa-circle-user"></i>
+        <h2 id="patient-name">جاري تحميل البيانات...</h2>
+        <div class="blood-badge" id="blood-type">-</div>
+    </div>
+
+    <div class="section-title">
+        <i class="fa-solid fa-triangle-exclamation"></i> البيانات الطبية الحرجة
+    </div>
+    
+    <div class="info-group">
+        <div class="info-card alert">
+            <i class="fa-solid fa-capsules"></i>
+            <div class="info-content">
+                <div class="info-label">الحساسية أو ملاحظات طارئة</div>
+                <div class="info-value" id="allergy">جاري الفحص...</div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <div class="info-content">
+                <div class="info-label">التشخيص والتفاصيل الطبية</div>
+                <div class="info-value" id="chronic-diseases">جاري الفحص...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <i class="fa-solid fa-phone-flip"></i> الاتصال في حالات الطوارئ
+    </div>
+
+    <div class="info-group">
+        <div class="info-card">
+            <i class="fa-solid fa-user-shield"></i>
+            <div class="info-content">
+                <div class="info-label">المستلم وقريب التواصل</div>
+                <div class="info-value" id="relative-kin">جاري الفحص...</div>
+            </div>
+        </div>
+        
+        <a href="#" class="btn-call" id="call-link">
+            <i class="fa-solid fa-phone"></i> اتصال فوري برقم الطوارئ
+        </a>
+    </div>
+
+    <div class="footer">
+        <p>هذه البيانات مستضافة بشكل آمن لمبادرة بصمتك الصحية لإنقاذ الأرواح.</p>
+        <p style="margin-top: 5px;">جميع الحقوق محفوظة للمهندسة عزيزة © 2026</p>
+    </div>
+</div>
+
+<script>
+    const patientsDatabase = {
+        "1": {
+            "name": "ليان محمد",
+            "blood": "B+",
+            "chronic": "قولون عصبي + سبق اجراء عمليه + عدم انتظام الضغط والسكر + مراجعة عند طبيب القلب",
+            "kin": "محمد الحويطي",
+            "phone": "0556360087"
+        },
+        "2": {
+            "name": "مضاوي  الجزيري",
+            "blood": "O-",
+            "chronic": "ربو",
+            "kin": "الاب",
+            "phone": "0503584003"
+        },
+        "3": {
+            "name": "البتول ناصر",
+            "blood": "O+",
+            "chronic": "الصرع",
+            "kin": "ناصر الحويطي",
+            "phone": "0506579033"
+        },
+        "4": {
+            "name": "غزل البلوي",
+            "blood": "A+",
+            "chronic": "ربو",
+            "kin": "الاخت",
+            "phone": "0553260818"
+        },
+        "5": {
+            "name": "العنود عبيدالله",
+            "blood": "O+",
+            "chronic": "كتمه والتهاب بالصدر متكرر",
+            "kin": "نوره",
+            "phone": "0546300312"
+        },
+        "6": {
+            "name": "لين الحويطي",
+            "blood": "O+",
+            "chronic": "السكري",
+            "kin": "عائشه سالم",
+            "phone": "0502275005"
+        },
+        "7": {
+            "name": "تولين  الثقفي",
+            "blood": "O+",
+            "chronic": "ربو",
+            "kin": "خديجة  الثمالي",
+            "phone": "0566344375"
+        },
+        "8": {
+            "name": "عذاري سعود",
+            "blood": "A+",
+            "chronic": "السكري",
+            "kin": "والدتها",
+            "phone": "0550382129"
+        },
+        "9": {
+            "name": "احلام  مرزوقي",
+            "blood": "A+",
+            "chronic": "روماتيد و متلازمة مضادات السنتيتيز وتليف رائوي",
+            "kin": "عبدالله احمد",
+"phone": "0555377292"
+        },
+        "10": {
+            "name": "نور علي",
+            "blood": "A+",
+            "chronic": "ربو حاد - الذيبه الحمرا",
+            "kin": "الام",
+            "phone": "0534505919"
+        },
+        "11": {
+            "name": "هاجر محمد",
+            "blood": "AB+",
+            "chronic": "حساسيه من ادويه المضاد الحيوي",
+            "kin": "جهة اتصال للطوارئ",
+            "phone": "0501692854"
+        },
+        "12": {
+            "name": "فوز عواد",
+            "blood": "O+",
+            "chronic": "السكري",
+            "kin": "الام",
+            "phone": "0507516850"
+        },
+        "13": {
+            "name": "مها غازي",
+            "blood": "A+",
+            "chronic": "الإغماء مستمر",
+            "kin": "روان  البلوي",
+            "phone": "0506043279"
+        },
+        "14": {
+            "name": "حامدة القرعاني",
+            "blood": "A-",
+            "chronic": "مرض السرطان",
+            "kin": "علي احمد",
+            "phone": "0535242526"
+        },
+        "15": {
+            "name": "حنان عوض",
+            "blood": "B-",
+            "chronic": "ربو",
+            "kin": "أخت",
+            "phone": "0500954188"
+        },
+        "16": {
+            "name": "ياسر غازي",
+            "blood": "A+",
+            "chronic": "السكري",
+            "kin": "غازي حسين",
+            "phone": "0557369597"
+        },
+        "17": {
+            "name": "سويلمه محمد",
+            "blood": "غير محدد",
+            "chronic": "القلب جلطه في الراس",
+            "kin": "جهة اتصال للطوارئ",
+            "phone": "0559691924"
+        },
+        "18": {
+            "name": "جميله",
+            "blood": "غير محدد",
+            "chronic": "سكري امراض القلب ضغط",
+            "kin": "ناصر",
+            "phone": "0557807402"
+        },
+        "19": {
+            "name": "سليم",
+            "blood": "غير محدد",
+            "chronic": "سكري",
+            "kin": "محمد",
+            "phone": "0563590057"
+        },
+        "20": {
+            "name": "فاطمه",
+            "blood": "غير محدد",
+            "chronic": "سكر",
+            "kin": "لطيفه",
+            "phone": "0535774598"
+        },
+        "21": {
+            "name": "محمد البلوي",
+            "blood": "O+",
+            "chronic": "ربو",
+            "kin": "سعيد",
+            "phone": "0501688697"
+        },
+        "22": {
+            "name": "حمده البلوي",
+            "blood": "غير محدد",
+            "chronic": "سكر ،ضغط",
+            "kin": "بنتها",
+            "phone": "0509242244"
+        },
+        "23": {
+            "name": "سهير عبادي",
+            "blood": "A+",
+            "chronic": "السكري و الضغط",
+            "kin": "ابن",
+            "phone": "0598327518"
+        },
+        "24": {
+            "name": "عيده محمد نصير",
+            "blood": "غير محدد",
+            "chronic": "ضغظ",
+            "kin": "عيد محمد",
+            "phone": "0553702699"
+        },
+        "25": {
+            "name": "صالح حماد",
+            "blood": "غير محدد",
+            "chronic": "سكر",
+            "kin": "ضحيه",
+            "phone": "0591690284"
+        },
+        "26": {
+            "name": "نوره",
+            "blood": "A+",
+            "chronic": "سكر",
+            "kin": "بنتها",
+            "phone": "0595076746"
+        }
+    };
+
+    function getPatientId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id') || "1";
+    }
+
+    const patientId = getPatientId();
+    const patient = patientsDatabase[patientId];
+
+    if (patient) {
+        document.getElementById('patient-name').innerText = patient.name;
+        document.getElementById('blood-type').innerText = "فصيلة الدم: " + patient.blood;
+        document.getElementById('allergy').innerText = "تمت المراجعة والتدقيق السحابي للمبادرة";
+        document.getElementById('chronic-diseases').innerText = patient.chronic;
+        document.getElementById('relative-kin').innerText = patient.kin;
+        document.getElementById('call-link').href = "tel:" + patient.phone;
+    } else {
+        document.getElementById('patient-name').innerText = "خطأ: مراجع غير مسجل";
+    }
+</script>
+
+</body>
+</html>
